@@ -1,0 +1,9 @@
+
+psquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ş³¤„8î›ß-
+msquid:S00116"URename this field "dateDÃ©but" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‰¾”Ü
+nsquid:S00117V"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÙİÓ†üÿÿÿÿ
+ksquid:S00100V"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÙİÓ†üÿÿÿÿ
+`squid:S00107"AConstructor has 9 parameters, which is greater than 7 authorized.(ş³¤„8î›ß-
+<squid:S1659"%Declare "dateFin" on a separate line.(‰¾”Ü
+fsquid:S00100R"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ùÓÿÏ
+Vsquid:UselessImportCheck"+Remove this unused import 'java.util.Date'.(¸…¼ü8÷ä…æ-

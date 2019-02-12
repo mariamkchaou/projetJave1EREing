@@ -1,0 +1,15 @@
+
+Osquid:S1444"1Make this "public static currentDate" field final(óèŞ‚8†ÑÆè-
+[squid:S00107"<Method has 8 parameters, which is greater than 7 authorized.(š¨óÖ8®ÖÅß-
+psquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(İî ä8†˜ß-
+]squid:S1118":Add a private constructor to hide the implicit public one.(³„¦©ûÿÿÿÿ8ì¢Ìè-
+V
+squid:S106$"9Replace this use of System.out or System.err by a logger.(î©é»8Â±ãè-
+V
+squid:S106""9Replace this use of System.out or System.err by a logger.(Æü­Ö8ˆääè-
+Jsquid:S1612F",Replace this lambda with a method reference.(‘í…Ø8ˆ˜´ç-
+zsquid:S1488"\Immediately return this expression instead of assigning it to the temporary variable "deal".(È€ŒÆ8ã§Ÿß-
+Œ"squid:ClassVariableVisibilityCheck"WMake currentDate a static final constant or non-public and provide accessors if needed.(óèŞ‚8†ÑÆè-
+V
+squid:S106%"9Replace this use of System.out or System.err by a logger.(Æü­Ö8°Ñ¹ç-
+tsquid:S21596"VRemove this call to "equals"; comparisons between unrelated types always return false.(Û˜’µ8şşãæ-

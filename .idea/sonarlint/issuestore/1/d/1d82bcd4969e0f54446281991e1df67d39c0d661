@@ -1,0 +1,18 @@
+
+squid:S14884"^Immediately return this expression instead of assigning it to the temporary variable "client".(³„à›ûÿÿÿÿ8ÚªÇŞ-
+hsquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·åœI
+V
+squid:S106O"9Replace this use of System.out or System.err by a logger.(ÿåÚ˜8™Ô é-
+V
+squid:S106B"9Replace this use of System.out or System.err by a logger.(Í½ƒª8ñ„é-
+Psquid:S1135"2Complete the task associated to this TODO comment.(»«“°8áùãŞ-
+V
+squid:S106N"9Replace this use of System.out or System.err by a logger.(Æü­Ö8šÂ¢é-
+Esquid:S1940#")Use the opposite operator ("!=") instead.(‘Ú½§ûÿÿÿÿ
+tsquid:S1192C"VDefine a constant instead of duplicating this literal "*******************\n" 3 times.(Æü­Ö8šÂ¢é-
+V
+squid:S106P"9Replace this use of System.out or System.err by a logger.(Æü­Ö8™Ô é-
+]squid:S1118
+":Add a private constructor to hide the implicit public one.(©îîğıÿÿÿÿ8â£·Ş-
+V
+squid:S106C"9Replace this use of System.out or System.err by a logger.(Æü­Ö8ñ„é-
