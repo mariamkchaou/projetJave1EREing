@@ -8,7 +8,7 @@ public class Vente {
 
     private LocalDate dateAchat;
     private Deal deals;
-    private Client client ;
+    private Client client;
     private Float quantité;
 
 
@@ -42,8 +42,6 @@ public class Vente {
     public void setDateAchat(LocalDate dateAchat) {
         this.dateAchat = dateAchat;
     }
-
-
 
     public Float getQuantité() {
         return quantité;

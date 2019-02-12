@@ -1,6 +1,10 @@
 package entities;
 
-public class Personne {
+/**
+ * abstract:
+ * c est un classe generale on ne doit pas l instantiet
+ */
+public  abstract class Personne {
 
     private String nom;
     private String adresse;

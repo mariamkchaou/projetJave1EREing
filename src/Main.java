@@ -5,6 +5,7 @@ import entities.Fournisseur;
 import error.exception.ExceptionDeal;
 import service.ServiceClient;
 import service.ServiceDeal;
+import service.ServiceFournisseur;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -31,11 +32,13 @@ public class Main {
             clients.add(ServiceClient.creat("mariam", "nabeul", "40323232", "mariam@5515", "00000000", clients));
             clients.add(ServiceClient.creat("hana", "mahdia", "40323234", "hana@5515", "10000000", clients));
             clients.add(ServiceClient.creat("hana", "mahdia", "40323234", "mariam@5515", "00000002", clients));
-            ServiceClient.chercheByCIN("00000000", clients);
-            ServiceClient.afficheOne(ServiceClient.chercheByCIN("00000000", clients));
-            //****************** Fournisseur
-            Fournisseur fournisseur = new Fournisseur("Jon", "Tunis", "55223665",
+                //**** fournisseur
+            Fournisseur fournisseur= ServiceFournisseur.creat("Jon", "Tunis", "55223665",
                     "JonFournisseur@gmail.com", "12003665", 8f, 1);
+
+                 ServiceClient.chercheByCIN("00000000", clients);
+                 ServiceClient.afficheOne(ServiceClient.chercheByCIN("00000000", clients));
+
 
             //*********************** deals
             List<Deal> deals = new ArrayList<>();
@@ -50,9 +53,9 @@ public class Main {
             deals.add(deal2);
             deals.add(deal3);
 
-             ServiceDeal.chercheDealEnCoursByCtagorie(deals, "hôtel");
-             ServiceDeal.affiche(deals);
-             ServiceDeal.afficheClientByDeal(deal1);
+            ServiceDeal.chercheDealEnCoursByCtagorie(deals, "hôtel");
+            ServiceDeal.affiche(deals);
+            ServiceDeal.afficheClientByDeal(deal1);
             ServiceDeal.afficheListClientByDeal(deals);
 
         } catch (ExceptionDeal e) {

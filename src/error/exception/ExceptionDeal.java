@@ -2,7 +2,11 @@ package error.exception;
 
 import error.ErrorsDeal;
 
-public class ExceptionDeal extends Exception {
+/**
+ * c est un classe generale on ne doit pas l instantiet
+ */
+
+public abstract   class ExceptionDeal extends Exception {
 
     private ErrorsDeal error;
 

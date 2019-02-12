@@ -63,6 +63,27 @@ public class ServiceDeal {
     }
 
     /**
+     * Rechercher les deals en cours
+     *
+     * @return
+     */
+    public static List<Deal> chercheDealEnCours(List<Deal> deals) {
+
+        List<Deal> dealList = new ArrayList<>();
+        int i = 0;
+        while (i < deals.size()) {
+
+            if (currentDate.isBefore(deals.get(i).getDateDébut()) && currentDate.isAfter(deals.get(i).getDateFin())) {
+                dealList.add(deals.get(i));
+            }
+            i++;
+
+        }
+
+        return dealList;
+    }
+
+    /**
      * cherche  la liste des deals d’un client par ordre chronologique.
      */
     private static List<Deal> chercheDealByClientOrderChrono(Client client) throws ExceptionDeal {
@@ -114,10 +135,10 @@ public class ServiceDeal {
                 listClientByDeal.setClients(chercheClientByDeal(deals.get(i)));
                 listClientByDeal.setNonDeal(deals.get(i).getNom());
                 listClientByDeals.add(listClientByDeal);
-            }catch(DealNotVend e){
+            } catch (DealNotVend e) {
                 System.out.println();
-            continue;
-        }
+                continue;
+            }
         }
         return listClientByDeals;
     }
@@ -141,6 +162,7 @@ public class ServiceDeal {
 
     /**
      * affiche tous la liste des clients par  deals
+     *
      * @param deal
      */
     public static void afficheClientByDeal(Deal deal) throws ExceptionDeal {
