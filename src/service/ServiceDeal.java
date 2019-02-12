@@ -17,14 +17,14 @@ public class ServiceDeal {
     public static LocalDate currentDate = LocalDate.now();
 
     public static Deal creat(String description, String nom, Float prixInitial, Float prixDeal,
-                             LocalDate dateDébut, LocalDate dateFin, Fournisseur localisation, Categories categories) throws ExceptionDeal {
-        if (nom == null || description == null || prixInitial == null || prixDeal == null || dateDébut == null || dateFin == null
+                             LocalDate dateDébut, LocalDate dateFin, Fournisseur localisation, Categories categories,String code) throws ExceptionDeal {
+        if (nom == null || description == null || prixInitial == null || prixDeal == null || dateDébut == null || dateFin == null|| code == null
                 || localisation == null || categories == null) {
             throw new ChampsObligatoireExceptionn();
         }
 
         Deal deal = new Deal(description, prixInitial, prixDeal, dateDébut,
-                dateFin, localisation, categories, null, nom);
+                dateFin, localisation, categories, null, nom,code);
         return deal;
 
 
@@ -67,20 +67,21 @@ public class ServiceDeal {
      *
      * @return
      */
-    public static List<Deal> chercheDealEnCours(List<Deal> deals) {
+    public static Deal chercheDealEnCoursByCode(List<Deal> deals,String code) {
 
         List<Deal> dealList = new ArrayList<>();
         int i = 0;
         while (i < deals.size()) {
 
-            if (currentDate.isBefore(deals.get(i).getDateDébut()) && currentDate.isAfter(deals.get(i).getDateFin())) {
-                dealList.add(deals.get(i));
+            if (currentDate.isBefore(deals.get(i).getDateDébut()) && currentDate.isAfter(deals.get(i).getDateFin())&&
+                    deals.get(i).getCode().equals(code)) {
+                return  deals.get(i);
             }
             i++;
 
         }
 
-        return dealList;
+        return null;
     }
 
     /**

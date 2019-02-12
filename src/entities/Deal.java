@@ -7,9 +7,8 @@ import java.util.List;
 public class Deal {
 
     private String description;
-
-
     private String nom;
+    private String code;
     private float prixInitial;
     private float prixDeal;
     private LocalDate dateDébut, dateFin;
@@ -17,8 +16,9 @@ public class Deal {
     private Categories categories;
     private List<Vente> ventes;
 
+
     public Deal(String description, float prixInitial, float prixDeal, LocalDate dateDébut,
-                LocalDate dateFin, Fournisseur localisation, Categories categories,List<Vente> ventes, String nom) {
+                LocalDate dateFin, Fournisseur localisation, Categories categories, List<Vente> ventes, String nom, String code) {
         this.description = description;
         this.prixInitial = prixInitial;
         this.prixDeal = prixDeal;
@@ -27,7 +27,16 @@ public class Deal {
         this.localisation = localisation;
         this.categories = categories;
         this.ventes = ventes;
+        this.code = code;
         this.nom = nom;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getNom() {
@@ -112,6 +121,6 @@ public class Deal {
                 " dateDébut=" + dateDébut + " \n" +
                 " dateFin=" + dateFin + " \n" +
                 " localisation=" + localisation + " \n" +
-                " categories=" + categories + " \n" ;
+                " categories=" + categories + " \n";
     }
 }

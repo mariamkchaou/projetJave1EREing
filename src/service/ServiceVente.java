@@ -15,25 +15,32 @@ public class ServiceVente {
      * ventes d’un deal existant à un client existant, puis afficher le Total à payer
      *
      * @param dateAchat
-     * @param deal
-     * @param client
+     * @param codeDeal
+     * @param cin
      * @param quantité
      * @param clients
      * @param deals
      * @return
+     * @throws ExceptionDeal
+     * @return
      */
-    public static Vente creeat(LocalDate dateAchat, Deal deal, Client client, Float quantité, List<Client> clients, List<Deal> deals) throws ExceptionDeal {
+    public static Vente creeat(LocalDate dateAchat, String codeDeal, String cin, Float quantité, List<Client> clients, List<Deal> deals) throws ExceptionDeal {
 
-        if (ServiceClient.chercheByCIN(client.getCin(), clients) == null) {
+        Client client= ServiceClient.chercheByCIN(cin, clients);
+        if (client == null) {
             throw new ClientNotFound();
         }
-        if (!ServiceDeal.chercheDealEnCours(deals).contains(deal)) {
+
+        Deal deal=ServiceDeal.chercheDealEnCoursByCode(deals,codeDeal);
+
+        if (deal==null) {
             throw new DealNotExiste();
         }
         Vente vente = new Vente(dateAchat, deal, client, quantité);
         System.out.println(" La vente a été réalisée avec succès, au prix : " + calculePrix(vente));
 
         return vente;
+
     }
 
     public static Float calculePrix(Vente vente) {
