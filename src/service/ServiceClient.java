@@ -6,11 +6,13 @@ import entities.Vente;
 import error.exception.*;
 import sun.applet.Main;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceClient {
 
+    private static String fileUrl = "Clients.txt";
 
     /**
      * o suppose que le deal de client est vide lors de sa creation
@@ -23,7 +25,7 @@ public class ServiceClient {
      * @throws ExceptionDeal
      */
     public static Client creat(String nom, String adresse, String téléphone,
-                               String email, String cin,List<Client> clients) throws ExceptionDeal {
+                               String email, String cin,List<Client> clients) throws ExceptionDeal, IOException {
         if (nom == null || adresse == null || téléphone == null || email == null || cin == null) {
             throw new ChampsObligatoireExceptionn();
 
@@ -59,6 +61,8 @@ public class ServiceClient {
             List<Vente> ventes=new ArrayList<>();
 
             Client client = new Client(nom, adresse, téléphone, email, cin, ventes);
+            clients.add(client);
+            saveClientFile(clients);
             return client;
 
         }
@@ -135,5 +139,50 @@ public class ServiceClient {
         throw new ClientNotFound();
     }
 
+
+    /***
+     * 
+     */
+
+
+    public static List<Client> loadClientFile() throws IOException {
+        ArrayList<Client> clients = new ArrayList<Client>();
+        FileReader fileReader = new FileReader(fileUrl);
+        BufferedReader ReadFileBuffer = new BufferedReader(fileReader);
+        String line = ReadFileBuffer.readLine();
+        while(line!=null){
+            String[] attributs =  line.split( ";");
+            try {
+                Client client = creat(attributs[0],attributs[1],attributs[2],attributs[3],attributs[4],clients);
+            } catch (ExceptionDeal exceptionDeal) {
+                exceptionDeal.printStackTrace();
+            }
+            line = ReadFileBuffer.readLine();
+            if(line!=null)
+            System.out.println(line);
+        }
+        return clients;
+
+    }
+
+    /**
+     *
+     * @param clientsList
+     * @throws IOException
+     */
+    public static void saveClientFile(List<Client> clientsList) throws IOException {
+        FileWriter fileWriter = new FileWriter(fileUrl);
+        BufferedWriter WriteFileBuffer = new BufferedWriter(fileWriter);
+        int i = 0;
+        while (i < clientsList.size()) {
+            String line = clientsList.get(i).getNom()+';'+clientsList.get(i).getAdresse()+';'+clientsList.get(i).getTéléphone()+';'
+                    +clientsList.get(i).getEmail()+';'+clientsList.get(i).getCin()+';';
+            WriteFileBuffer.write(line);
+            WriteFileBuffer.newLine();
+            i++;
+        }
+        WriteFileBuffer.close();
+
+    }
 
 }
