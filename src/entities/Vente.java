@@ -50,4 +50,13 @@ public class Vente {
     public void setQuantité(Float quantité) {
         this.quantité = quantité;
     }
+
+    @Override
+    public String toString() {
+        return "Vente:" +
+                "dateAchat=" + dateAchat +"\n"+
+                ", deals=" + deals.toString() +"\n"+
+                ", client=" + client.toString()+"\n"+
+                ", quantité=" + quantité ;
+    }
 }
