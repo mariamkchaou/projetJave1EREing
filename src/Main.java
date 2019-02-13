@@ -8,11 +8,18 @@ import service.ServiceVente;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static List<Client> clients;
 
     public static void main(String[] args) throws ExceptionDeal {
+
+        System.out.println("Enter your full name");
+
+        //taking user input
+        Scanner scan = new Scanner(System.in);
+        String name = scan.nextLine();
         /**
          * remplir categorie
          */
