@@ -163,6 +163,22 @@ public class ServiceDeal {
     }
 
     /**
+     *
+     * @param client
+     * @throws ExceptionDeal
+     */
+    public static void afficheListDealOrderChrono(Client client) throws ExceptionDeal {
+        List<Deal> deals=chercheDealByClientOrderChrono(client);
+        int i = 0;
+
+        while (i < deals.size()) {
+            System.out.println(deals.get(i).toString());
+            i++;
+
+        }
+    }
+
+    /**
      * affiche tous la liste des clients par  deals
      *
      * @param deal
@@ -178,6 +194,26 @@ public class ServiceDeal {
 
 
     }
+
+    /**
+     *
+     * @param deals
+     * @param categorie
+     * @throws ExceptionDeal
+     */
+    public static void afficheListDealByCategorie(List<Deal> deals, String categorie) throws ExceptionDeal {
+        List<Deal> deal=chercheDealEnCoursByCtagorie( deals,  categorie);
+        int i = 0;
+
+        while (i < deal.size()) {
+            System.out.println(deal.get(i).toString());
+            i++;
+
+        }
+    }
+
+
+
 
 
 }
