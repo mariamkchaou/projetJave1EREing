@@ -37,8 +37,10 @@ public class ServiceVente {
             throw new DealNotExiste();
         }
         Vente vente = new Vente(dateAchat, deal, client, quantité);
-        System.out.println(" La vente a été réalisée avec succès, au prix : " + calculePrix(vente));
 
+        System.out.println(" La vente a été réalisée avec succès, au prix : " + calculePrix(vente));
+        client.getVentes().add(vente);
+        deal.getVentes().add(vente);
         return vente;
 
     }

@@ -22,9 +22,10 @@ public class ServiceDeal {
                 || localisation == null || categories == null) {
             throw new ChampsObligatoireExceptionn();
         }
+        List<Vente> ventes= new ArrayList<>();
 
         Deal deal = new Deal(description, prixInitial, prixDeal, dateDébut,
-                dateFin, localisation, categories, null, nom,code);
+                dateFin, localisation, categories, ventes, nom,code);
         return deal;
 
 
@@ -51,7 +52,7 @@ public class ServiceDeal {
         int i = 0;
         while (i < deals.size()) {
 
-            if (currentDate.isBefore(deals.get(i).getDateDébut()) && currentDate.isAfter(deals.get(i).getDateFin()) &&
+            if (((currentDate.isBefore(deals.get(i).getDateDébut()) && currentDate.isAfter(deals.get(i).getDateFin()))||currentDate.isEqual(deals.get(i).getDateDébut())||currentDate.isEqual(deals.get(i).getDateFin())) &&
                     deals.get(i).getCategories().equals(categorie)) {
                 dealList.add(deals.get(i));
             }
@@ -73,7 +74,7 @@ public class ServiceDeal {
         int i = 0;
         while (i < deals.size()) {
 
-            if (currentDate.isBefore(deals.get(i).getDateDébut()) && currentDate.isAfter(deals.get(i).getDateFin())&&
+            if (((currentDate.isBefore(deals.get(i).getDateDébut()) && currentDate.isAfter(deals.get(i).getDateFin()))||currentDate.isEqual(deals.get(i).getDateDébut())||currentDate.isEqual(deals.get(i).getDateFin()))&&
                     deals.get(i).getCode().equals(code)) {
                 return  deals.get(i);
             }

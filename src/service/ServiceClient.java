@@ -2,9 +2,11 @@ package service;
 
 import entities.Client;
 
+import entities.Vente;
 import error.exception.*;
 import sun.applet.Main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceClient {
@@ -54,8 +56,9 @@ public class ServiceClient {
             Client client1=chercheByCIN(cin, clients);
             throw  new ClientInscrit();
         }catch (ClientNotFound e){
+            List<Vente> ventes=new ArrayList<>();
 
-            Client client = new Client(nom, adresse, téléphone, email, cin, null);
+            Client client = new Client(nom, adresse, téléphone, email, cin, ventes);
             return client;
 
         }
