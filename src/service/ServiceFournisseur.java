@@ -58,6 +58,18 @@ public class ServiceFournisseur {
 
         return null;
     }
+    public static Fournisseur getFournisseurCin(String cin, List<Fournisseur> fournisseur) throws ClientNotFound {
+        int i = 0;
+        while (i < fournisseur.size()) {
+
+            if (fournisseur.get(i).getCin().equals(cin)) {
+                return fournisseur.get(i);
+            }
+            i++;
+        }
+
+        throw  new ClientNotFound();
+    }
 
 
     public static List<Fournisseur> loadFournisseurFile() throws IOException {

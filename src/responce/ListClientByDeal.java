@@ -36,15 +36,16 @@ public class ListClientByDeal {
 
     @Override
     public String toString() {
-        String affiche = "ListClientByDeal{" +
-                "Deal='" + nonDeal + "\n";
+        String affiche = "ListClientByDeal: \n" +
+                "Deal='" + nonDeal + "\n"+
+                "client[";
         int i = 0;
         if (clients != null) {
             while (i < clients.size()) {
                 affiche += clients.get(i).toString() + "\n";
-
+                i++;
             }
         }
-        return affiche;
+        return affiche+"\n]";
     }
 }

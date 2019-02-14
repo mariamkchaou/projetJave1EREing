@@ -45,6 +45,7 @@ public class ServiceDeal {
             System.out.println("*******************\n");
             i++;
         }
+
     }
 
     /**
@@ -58,8 +59,11 @@ public class ServiceDeal {
         int i = 0;
         while (i < deals.size()) {
 
-            if (((currentDate.isBefore(deals.get(i).getDateDébut()) && currentDate.isAfter(deals.get(i).getDateFin())) || currentDate.isEqual(deals.get(i).getDateDébut()) || currentDate.isEqual(deals.get(i).getDateFin())) &&
-                    deals.get(i).getCategories().equals(categorie)) {
+            if (((currentDate.isBefore(deals.get(i).getDateDébut()) &&
+                    currentDate.isAfter(deals.get(i).getDateFin())) ||
+                    ( currentDate.isEqual(deals.get(i).getDateDébut())
+                            || currentDate.isEqual(deals.get(i).getDateFin())) )&&
+                    deals.get(i).getCategories().getCcategorie().equals(categorie)) {
                 dealList.add(deals.get(i));
             }
             i++;
@@ -112,19 +116,21 @@ public class ServiceDeal {
     /**
      * recherche  la liste des clients par un  deal
      */
-    private static List<Client> chercheClientByDeal(Deal deal) throws ExceptionDeal {
+    private static List<Client> chercheClientByDeal(Deal deal) {
 
         List<Vente> ventes = deal.getVentes();
         List<Client> clients = new ArrayList<>();
-        if (ventes != null) {
+        if (!ventes.isEmpty()) {
             int i = 0;
             while (i < ventes.size()) {
-                clients.add(ventes.get(i).getClient());
+                if(ventes.get(i).getClient()!=null){
+                  clients.add(ventes.get(i).getClient());
+                }
+                i++;
             }
-            return clients;
-        } else {
-            throw new DealNotVend();
+
         }
+        return clients;
     }
 
     /**
@@ -133,21 +139,20 @@ public class ServiceDeal {
      * @param deals
      * @return
      */
-    private static List<ListClientByDeal> chercheListClientByDeal(List<Deal> deals) throws ExceptionDeal {
+    public static List<ListClientByDeal> chercheListClientByDeal(List<Deal> deals) throws ExceptionDeal {
 
         List<ListClientByDeal> listClientByDeals = new ArrayList<>();
         ListClientByDeal listClientByDeal = new ListClientByDeal();
         int i = 0;
+
         while (i < deals.size()) {
-            try {
                 listClientByDeal.setClients(chercheClientByDeal(deals.get(i)));
                 listClientByDeal.setNonDeal(deals.get(i).getNom());
                 listClientByDeals.add(listClientByDeal);
-            } catch (DealNotVend e) {
-                System.out.println();
-                continue;
+                i++;
             }
-        }
+
+
         return listClientByDeals;
     }
 
@@ -160,7 +165,6 @@ public class ServiceDeal {
     public static void afficheListClientByDeal(List<Deal> deals) throws ExceptionDeal {
         List<ListClientByDeal> listClientByDeals = chercheListClientByDeal(deals);
         int i = 0;
-
         while (i < listClientByDeals.size()) {
             System.out.println(listClientByDeals.get(i).toString());
             i++;
@@ -169,11 +173,13 @@ public class ServiceDeal {
     }
 
     /**
-     * @param client
+     *
+     * @param deals
      * @throws ExceptionDeal
      */
-    public static void afficheListDealOrderChrono(Client client) throws ExceptionDeal {
-        List<Deal> deals = chercheDealByClientOrderChrono(client);
+    public static void afficheListDealOrderChrono(List<Deal> deals ) throws ExceptionDeal {
+        List<Deal> dealList = deals;
+        dealList.sort(Comparator.comparing(a -> a.getDateDébut()));
         int i = 0;
 
         while (i < deals.size()) {

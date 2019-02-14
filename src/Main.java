@@ -2,6 +2,7 @@ import entities.*;
 import error.ErrorsDeal;
 import error.exception.ExceptionDeal;
 import org.omg.CORBA.Object;
+import responce.ListClientByDeal;
 import responce.Menu;
 import service.*;
 
@@ -58,20 +59,116 @@ public class Main {
             //    remplirVente(deal, clients, ventes);
             ventes = ServiceVente.loadVentesFile(clients, deal);
             choix = "1";
+
             while (!choix.equals("7")) {
-                choix = Menu.lireChoix();
-                if (choix.equals("1")) {
-                    HashMap<String, String> map = lireClientInformation();
-                    ServiceClient.creat(map.get("nom"),map.get("adresse"),map.get("telephone"),map.get("mail"),map.get("cin"),clients);
+                try {
 
-                } else if (choix.equals("2")) {
-                    HashMap<String, String> map = lireFourniseurInformation();
-                    ServiceFournisseur.creat(map.get("nom"),map.get("adresse"),map.get("telephone"),map.get("mail"),map.get("cin"),Float.valueOf(map.get("heure")),Integer.valueOf(map.get("code")),fournisseurs);
 
-                } else if (choix.equals("3")) {
+                    choix = Menu.lireChoix();
+                    if (choix.equals("1")) {
+                        HashMap<String, String> map = lireClientInformation();
+                        ServiceClient.creat(map.get("nom"), map.get("adresse"), map.get("telephone"), map.get("mail"), map.get("cin"), clients);
 
-                } else if (choix.equals("4")) {
+                    } else if (choix.equals("2")) {
+                        HashMap<String, String> map = lireFourniseurInformation();
+                        ServiceFournisseur.creat(map.get("nom"), map.get("adresse"), map.get("telephone"), map.get("mail"), map.get("cin"), Float.valueOf(map.get("heure")), Integer.valueOf(map.get("code")), fournisseurs);
 
+                    } else if (choix.equals("3")) {
+
+                        String ch = Menu.TypeClient();
+                        if (ch.equals("1")) {
+
+                            String cin = Menu.SingClient();
+                            Client clientConnect = ServiceClient.chercheByCIN(cin, clients);
+                            String x = Menu.MenuClient();
+                            if (x.equals("1")) {
+                                /**
+                                 * Afficher la liste des deals  par ordre chronologique.
+                                 */
+                                ServiceDeal.afficheListDealOrderChrono(deal);
+
+                            } else if ((x.equals("2"))) {
+                                /**
+                                 *  Rechercher les deals en cours par catégorie.
+                                 */
+
+                                String categorieNumber = Menu.MenuCategorie();
+                                String categorieName = "hôtel";
+                                if (categorieNumber.equals("1")) {
+                                    categorieName = "spa";
+                                } else if (categorieNumber.equals("2")) {
+                                    categorieName = "restauration";
+                                } else if (categorieNumber.equals("3")) {
+                                    categorieName = "hôtel";
+                                }
+
+                                ServiceDeal.afficheListDealByCategorie(deal, categorieName);
+                            } else if ((x.equals("3"))) {
+                                /**
+                                 *  Acheter un deal
+                                 *  todo
+                                 */
+                                ServiceDeal.affiche(deal);
+                                System.out.println("Donner le code de Deal ");
+                                Scanner scan = new Scanner(System.in);
+                                String code = scan.nextLine();
+
+                                System.out.println("Donner la quantité de Deal ");
+                                String q = scan.nextLine();
+                                ServiceVente.creat(currentDate,code,clientConnect.getCin(),Float.valueOf(q),clients,1,deal,ventes);
+
+                            }
+
+                        } else if (ch.equals("2")) {
+                            // fournisseur compte
+                            String cin = Menu.SingClient();
+                            Fournisseur fournisseur = ServiceFournisseur.getFournisseurCin(cin, fournisseurs);
+                            String FournisseurChoix = Menu.MenuFournisseur();
+                            //Afficher la liste des clients par deal.
+                            if (FournisseurChoix.equals("1")) {
+                                /**
+                                 *
+                                 Créer Deal
+                                 */
+
+                                HashMap<String, String> map = lireDealInformation();
+                                ServiceDeal.creat(map.get("desc"), map.get("nom"),
+                                        Float.valueOf(map.get("prixInitial")),
+                                        Float.valueOf(map.get("prixDeal")), currentDate, currentDate.plusMonths(1),
+                                        fournisseur.getCode(), Integer.valueOf(map.get("categoriesCode")), map.get("desc"), categories, fournisseurs, deal);
+                            } else if (FournisseurChoix.equals("2")) {
+                                /**
+                                 *  Afficher la liste des clients par deal
+                                 */
+                                System.out.println(deal.size());
+                                ServiceDeal.afficheListClientByDeal(deal);
+                            } else if (FournisseurChoix.equals("7")) {
+
+                            }
+
+                        }
+
+
+                    } else if (choix.equals("4")) {
+                        /**
+                         *  Rechercher les deals en cours par catégorie.
+                         */
+
+                        String categorieNumber = Menu.MenuCategorie();
+                        String categorieName = "hôtel";
+                        if (categorieNumber.equals("1")) {
+                            categorieName = "spa";
+                        } else if (categorieNumber.equals("2")) {
+                            categorieName = "restauration";
+                        } else if (categorieNumber.equals("3")) {
+                            categorieName = "hôtel";
+                        }
+
+                        ServiceDeal.afficheListDealByCategorie(deal, categorieName);
+
+                    }
+                } catch (ExceptionDeal e) {
+                    System.out.println(e.getError().getDesc());
                 }
             }
 
@@ -135,12 +232,9 @@ public class Main {
         System.out.println("Donner le prix  de Deal ");
         String prixDeal = scan.nextLine();
         map.put("prixDeal", prixDeal);
-        System.out.println("Donner le code de fournisseur.");
-        String CodeFournisseur = scan.nextLine();
-        map.put("CodeFournisseur", CodeFournisseur);
         System.out.println("Donner le code de categorie. :");
-        System.out.println(" 1-spa  restauration hôtel");
-        System.out.println(" 2-  restauration");
+        System.out.println(" 1- spa restauration hôtel");
+        System.out.println(" 2- restauration");
         System.out.println(" 3- hôtel");
         String categoriesCode = scan.nextLine();
         map.put("categoriesCode", categoriesCode);
@@ -195,16 +289,16 @@ public class Main {
 
         LocalDate dateAchat = LocalDate.now();
         Vente vente1 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(1).getCin(), 1f, clients, 1, deal, ventes);
-        Vente vente2 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(1).getCin(), 3f, clients, 2, deal, ventes);
+        Vente vente2 = ServiceVente.creat(dateAchat, deal.get(2).getCode(), clients.get(2).getCin(), 3f, clients, 2, deal, ventes);
         Vente vente3 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(1).getCin(), 9f, clients, 3, deal, ventes);
-        Vente vente4 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(1).getCin(), 1f, clients, 4, deal, ventes);
-        Vente vente5 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(1).getCin(), 1f, clients, 5, deal, ventes);
-        Vente vente6 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(1).getCin(), 1f, clients, 6, deal, ventes);
-        Vente vente7 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(1).getCin(), 1f, clients, 7, deal, ventes);
-        Vente vente8 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(1).getCin(), 1f, clients, 8, deal, ventes);
-        Vente vente9 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(1).getCin(), 1f, clients, 9, deal, ventes);
-        Vente vente10 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(1).getCin(), 1f, clients, 10, deal, ventes);
-        Vente vente11 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(1).getCin(), 1f, clients, 11, deal, ventes);
+        Vente vente4 = ServiceVente.creat(dateAchat, deal.get(3).getCode(), clients.get(2).getCin(), 1f, clients, 4, deal, ventes);
+        Vente vente5 = ServiceVente.creat(dateAchat, deal.get(2).getCode(), clients.get(1).getCin(), 1f, clients, 5, deal, ventes);
+        Vente vente6 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(2).getCin(), 1f, clients, 6, deal, ventes);
+        Vente vente7 = ServiceVente.creat(dateAchat, deal.get(2).getCode(), clients.get(1).getCin(), 1f, clients, 7, deal, ventes);
+        Vente vente8 = ServiceVente.creat(dateAchat, deal.get(3).getCode(), clients.get(2).getCin(), 1f, clients, 8, deal, ventes);
+        Vente vente9 = ServiceVente.creat(dateAchat, deal.get(2).getCode(), clients.get(3).getCin(), 1f, clients, 9, deal, ventes);
+        Vente vente10 = ServiceVente.creat(dateAchat, deal.get(3).getCode(), clients.get(1).getCin(), 1f, clients, 10, deal, ventes);
+        Vente vente11 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(3).getCin(), 1f, clients, 11, deal, ventes);
 
 
     }

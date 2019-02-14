@@ -54,7 +54,7 @@ public class ServiceVente {
          */
         ServiceDeal.addVenteToDeal(deals, vente, deal);
         ServiceDeal.saveDealFile(deals);
-      //  System.out.println(" La vente a été réalisée avec succès, au prix : " + calculePrix(vente));
+       System.out.println(" La vente a été réalisée avec succès, au prix : " + calculePrix(vente));
 
         return vente;
 

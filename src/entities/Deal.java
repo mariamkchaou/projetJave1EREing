@@ -115,12 +115,13 @@ public class Deal {
     public String toString() {
         return "Deal : " +
                 " nom='" + nom + " \n" +
+                " code='" + code + " \n" +
                 " description='" + description + " \n" +
                 " prixInitial=" + prixInitial + " \n" +
                 " prixDeal=" + prixDeal + " \n" +
                 " dateDébut=" + dateDébut + " \n" +
                 " dateFin=" + dateFin + " \n" +
-                " localisation=" + localisation + " \n" +
-                " categories=" + categories + " \n";
+                " localisation=" + localisation .toString()+ " \n" +
+                " categories=" + categories.toString() + " \n";
     }
 }
