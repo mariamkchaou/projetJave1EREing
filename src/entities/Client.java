@@ -14,7 +14,7 @@ public class Client extends Personne {
     }
 
 
-    public Client(String nom, String adresse, String téléphone, String email, String cin, List<Vente> ventes)  {
+    public Client(String nom, String adresse, String téléphone, String email, String cin, List<Vente> ventes) {
         super(nom, adresse, téléphone, email, cin);
         this.ventes = ventes;
     }
@@ -23,10 +23,10 @@ public class Client extends Personne {
     public String toString() {
         return "Client: " + " \n" +
                 "nom:" + getNom() + " \n" +
-               "adresse: "+getAdresse()+ " \n" +
-                "téléphone:"+getTéléphone()+ " \n" +
-                "email:"+getEmail()+ " \n" +
-                "cin:"+getCin();
+                "adresse: " + getAdresse() + " \n" +
+                "téléphone:" + getTéléphone() + " \n" +
+                "email:" + getEmail() + " \n" +
+                "cin:" + getCin();
 
 
     }

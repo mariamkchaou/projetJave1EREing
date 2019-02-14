@@ -2,7 +2,7 @@ package entities;
 
 import java.util.List;
 
-public class Fournisseur  extends  Personne{
+public class Fournisseur extends Personne {
 
     private Float horaireTravail;
     private Integer code;
@@ -24,7 +24,7 @@ public class Fournisseur  extends  Personne{
     }
 
     public Fournisseur(String nom, String adresse, String téléphone,
-                       String email, String cin, Float horaireTravail,Integer code) {
+                       String email, String cin, Float horaireTravail, Integer code) {
         super(nom, adresse, téléphone, email, cin);
         this.horaireTravail = horaireTravail;
         this.code = code;

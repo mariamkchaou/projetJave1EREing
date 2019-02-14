@@ -25,7 +25,7 @@ public class ServiceClient {
      * @throws ExceptionDeal
      */
     public static Client creat(String nom, String adresse, String téléphone,
-                               String email, String cin,List<Client> clients) throws ExceptionDeal, IOException {
+                               String email, String cin, List<Client> clients) throws ExceptionDeal, IOException {
         if (nom == null || adresse == null || téléphone == null || email == null || cin == null) {
             throw new ChampsObligatoireExceptionn();
 
@@ -54,11 +54,11 @@ public class ServiceClient {
             throw new EmailFormatException();
         }
 
-        try{
-            Client client1=chercheByCIN(cin, clients);
-            throw  new ClientInscrit();
-        }catch (ClientNotFound e){
-            List<Vente> ventes=new ArrayList<>();
+        try {
+            Client client1 = chercheByCIN(cin, clients);
+            throw new ClientInscrit();
+        } catch (ClientNotFound e) {
+            List<Vente> ventes = new ArrayList<>();
 
             Client client = new Client(nom, adresse, téléphone, email, cin, ventes);
             clients.add(client);
@@ -68,7 +68,7 @@ public class ServiceClient {
         }
 
 
-   }
+    }
 
     /**
      * @param clients
@@ -85,11 +85,10 @@ public class ServiceClient {
     }
 
     /**
-     *
      * @param client
      * @throws ExceptionDeal
      */
-    public static void afficheOne(Client client)  {
+    public static void afficheOne(Client client) {
         System.out.println("*******************\n");
         System.out.println(client.toString());
         System.out.println("*******************\n");
@@ -139,9 +138,21 @@ public class ServiceClient {
         throw new ClientNotFound();
     }
 
+    public static void AddVenteToClient(List<Client> clients, Vente vente, Client client) {
+        int i = 0;
+        while (i < clients.size()) {
+            if (clients.get(i).getCin().equals(client.getCin())) {
+                clients.get(i).getVentes().add(vente);
+                break;
+            }
+            i++;
+
+        }
+    }
+
 
     /***
-     * 
+     *
      */
 
 
@@ -150,23 +161,24 @@ public class ServiceClient {
         FileReader fileReader = new FileReader(fileUrl);
         BufferedReader ReadFileBuffer = new BufferedReader(fileReader);
         String line = ReadFileBuffer.readLine();
-        while(line!=null){
-            String[] attributs =  line.split( ";");
+        while (line != null) {
+            String[] attributs = line.split(";");
             try {
-                Client client = creat(attributs[0],attributs[1],attributs[2],attributs[3],attributs[4],clients);
+                Client client = creat(attributs[0], attributs[1], attributs[2], attributs[3], attributs[4], clients);
+
             } catch (ExceptionDeal exceptionDeal) {
                 exceptionDeal.printStackTrace();
             }
             line = ReadFileBuffer.readLine();
-            if(line!=null)
-            System.out.println(line);
+            if (line != null)
+                System.out.println(line);
         }
+
         return clients;
 
     }
 
     /**
-     *
      * @param clientsList
      * @throws IOException
      */
@@ -175,8 +187,8 @@ public class ServiceClient {
         BufferedWriter WriteFileBuffer = new BufferedWriter(fileWriter);
         int i = 0;
         while (i < clientsList.size()) {
-            String line = clientsList.get(i).getNom()+';'+clientsList.get(i).getAdresse()+';'+clientsList.get(i).getTéléphone()+';'
-                    +clientsList.get(i).getEmail()+';'+clientsList.get(i).getCin()+';';
+            String line = clientsList.get(i).getNom() + ';' + clientsList.get(i).getAdresse() + ';' + clientsList.get(i).getTéléphone() + ';'
+                    + clientsList.get(i).getEmail() + ';' + clientsList.get(i).getCin() + ';';
             WriteFileBuffer.write(line);
             WriteFileBuffer.newLine();
             i++;

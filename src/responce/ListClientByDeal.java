@@ -13,7 +13,8 @@ public class ListClientByDeal {
         this.clients = clients;
 
     }
-    public ListClientByDeal( ) {
+
+    public ListClientByDeal() {
 
     }
 
@@ -35,14 +36,15 @@ public class ListClientByDeal {
 
     @Override
     public String toString() {
-        String affiche= "ListClientByDeal{" +
-                "Deal='" + nonDeal +"\n" ;
-        int i =0;
-        if(clients!=null){
-        while (i < clients.size()) {
-            affiche+=   clients.get(i).toString()+"\n" ;
+        String affiche = "ListClientByDeal{" +
+                "Deal='" + nonDeal + "\n";
+        int i = 0;
+        if (clients != null) {
+            while (i < clients.size()) {
+                affiche += clients.get(i).toString() + "\n";
 
-        }}
-        return  affiche;
+            }
+        }
+        return affiche;
     }
 }

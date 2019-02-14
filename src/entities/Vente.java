@@ -7,7 +7,10 @@ import java.util.List;
 public class Vente {
 
     private LocalDate dateAchat;
-    private  Integer id;
+    private Integer id;
+    private Deal deals;
+    private Client client;
+    private Float quantité;
 
     public Integer getId() {
         return id;
@@ -17,17 +20,13 @@ public class Vente {
         this.id = id;
     }
 
-    private Deal deals;
-    private Client client;
-    private Float quantité;
 
-
-    public Vente(LocalDate dateAchat, Deal deals, Client client, Float quantité,Integer id) {
+    public Vente(LocalDate dateAchat, Deal deals, Client client, Float quantité, Integer id) {
         this.dateAchat = dateAchat;
         this.deals = deals;
         this.client = client;
         this.quantité = quantité;
-        this.id=id;
+        this.id = id;
     }
 
     public Deal getDeals() {
@@ -65,9 +64,9 @@ public class Vente {
     @Override
     public String toString() {
         return "Vente:" +
-                "dateAchat=" + dateAchat +"\n"+
-                ", deals=" + deals.toString() +"\n"+
-                ", client=" + client.toString()+"\n"+
-                ", quantité=" + quantité ;
+                "dateAchat=" + dateAchat + "\n" +
+                ", deals=" + deals.toString() + "\n" +
+                ", client=" + client.toString() + "\n" +
+                ", quantité=" + quantité;
     }
 }

@@ -5,6 +5,7 @@ import org.omg.CORBA.Object;
 import responce.Menu;
 import service.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,38 +14,52 @@ import java.util.Scanner;
 
 public class Main {
     public static List<Client> clients;
+    public static List<Deal> deal;
+    public static List<Vente> ventes;
 
     public static LocalDate currentDate = LocalDate.now();
 
     public static void main(String[] args) throws ExceptionDeal {
 
         try {
+            String choix;
 
-            /**
-             *initilisation client
-             */
+                    /**
+                     *initilisation client
+                     */
             clients = new ArrayList<>();
             clients = ServiceClient.loadClientFile();
+
             /**
              * initiaisation fournisseur
              */
-
             List<Fournisseur> fournisseurs = ServiceFournisseur.loadFournisseurFile();
-            ServiceFournisseur.saveFournisseurFile(fournisseurs);
+
 
             /**
              * initialisation categorie
              */
 
             List<Categories> categories = ServiseCategorie.loadCategorieFile();
-            ServiseCategorie.saveCategorieFile(categories);
-         List<Deal> deals = remplirDeal(categories, fournisseurs);
-            ServiceDeal.saveCategorieFile(deals);
-            List<Deal> deal=ServiceDeal.loadCategorieFile(categories,fournisseurs);
-            System.out.println(deal.size());
 
-            ServiceDeal.saveCategorieFile(deal);
-            // String choix = Menu.lireChoix();
+
+            /**
+             * initialisation deal
+             */
+            deal = new ArrayList<>();
+            // deal=remplirDeal( categories,  fournisseurs);
+            deal = ServiceDeal.loadDealFile(categories, fournisseurs, deal);
+
+
+            /**
+             *initialisation vente
+             */
+            ventes = new ArrayList<>();
+            //    remplirVente(deal, clients, ventes);
+            ventes = ServiceVente.loadVentesFile(clients, deal);
+
+
+            choix = Menu.lireChoix();
 
         } catch (ExceptionDeal e) {
             System.out.println(e.getError().getDesc());
@@ -147,38 +162,36 @@ public class Main {
         return map;
     }
 
-    public static List<Deal> remplirDeal(List<Categories> categoriesList, List<Fournisseur> fournisseurs) throws ExceptionDeal {
+    public static List<Deal> remplirDeal(List<Categories> categoriesList, List<Fournisseur> fournisseurs) throws ExceptionDeal, IOException {
 
         List<Deal> deals = new ArrayList<>();
         Deal deal1 = ServiceDeal.creat(" Profitez de nos offres spéciales! Petits Prix. Réservez Maintenant. Sans frais de réservation. ",
-                "Palace", 100f, 120f, currentDate, currentDate.plusMonths(2), 123, 1, "100", categoriesList, fournisseurs);
+                "Palace", 100f, 120f, currentDate, currentDate.plusMonths(2), 123, 1, "100", categoriesList, fournisseurs, deals);
         Deal deal2 = ServiceDeal.creat(" Profitez de nos offres spéciales! Petits Prix. Réservez Maintenant. Sans frais de réservation. ",
                 "Talaso", 100f, 120f, currentDate, currentDate.plusMonths(2), 123, 1, "101",
-                categoriesList, fournisseurs);
+                categoriesList, fournisseurs, deals);
         Deal deal3 = ServiceDeal.creat(" Profitez de nos offres spéciales! Petits Prix. Réservez Maintenant. Sans frais de réservation. ",
-                "Vacance", 100f, 120f, currentDate, currentDate.plusMonths(2), 123, 3, "103", categoriesList, fournisseurs);
-        deals.add(deal1);
-        deals.add(deal2);
-        deals.add(deal3);
-        return  deals;
+                "Vacance", 100f, 120f, currentDate, currentDate.plusMonths(2), 123, 3, "103", categoriesList, fournisseurs, deals);
+
+        return deals;
+    }
+
+    public static void remplirVente(List<Deal> deal, List<Client> clients, List<Vente> ventes) throws IOException, ExceptionDeal {
+
+        LocalDate dateAchat = LocalDate.now();
+        Vente vente1 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(1).getCin(), 1f, clients, 1, deal, ventes);
+        Vente vente2 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(1).getCin(), 3f, clients, 2, deal, ventes);
+        Vente vente3 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(1).getCin(), 9f, clients, 3, deal, ventes);
+        Vente vente4 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(1).getCin(), 1f, clients, 4, deal, ventes);
+        Vente vente5 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(1).getCin(), 1f, clients, 5, deal, ventes);
+        Vente vente6 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(1).getCin(), 1f, clients, 6, deal, ventes);
+        Vente vente7 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(1).getCin(), 1f, clients, 7, deal, ventes);
+        Vente vente8 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(1).getCin(), 1f, clients, 8, deal, ventes);
+        Vente vente9 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(1).getCin(), 1f, clients, 9, deal, ventes);
+        Vente vente10 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(1).getCin(), 1f, clients, 10, deal, ventes);
+        Vente vente11 = ServiceVente.creat(dateAchat, deal.get(1).getCode(), clients.get(1).getCin(), 1f, clients, 11, deal, ventes);
+
+
     }
 }
-
-   /* List<Vente> ventes = new ArrayList<>();
-    LocalDate dateAchat = LocalDate.now();
-    Vente vente1 = ServiceVente.creeat(dateAchat, deal1.getCode(), client1.getCin(), 1f, clients, deals);
-    Vente vente2= ServiceVente.creeat( dateAchat,  deal2,  client2,  3f,clients, deals);
-    Vente vente3= ServiceVente.creeat( dateAchat,  deal1,  client3,  9f,clients, deals);
-    Vente vente4= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
-    Vente vente5= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
-    Vente vente6= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
-    Vente vente7= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
-    Vente vente8= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
-    Vente vente9= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
-    Vente vente10= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
-    Vente vente11= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
-            ServiceClient.chercheByCIN("00000000", clients);
-            ServiceClient.afficheOne(ServiceClient.chercheByCIN("00000000", clients));*/
-
-
 
