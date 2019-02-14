@@ -7,7 +7,9 @@ import error.exception.DealNotVend;
 import error.exception.ExceptionDeal;
 import responce.ListClientByDeal;
 
+import java.io.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -15,15 +17,17 @@ import java.util.List;
 public class ServiceDeal {
 
     public static LocalDate currentDate = LocalDate.now();
+    public static  String fileUrl="deal.txt";
 
     public static Deal creat(String description, String nom, Float prixInitial, Float prixDeal,
-                             LocalDate dateDébut, LocalDate dateFin, Fournisseur localisation, Categories categories,String code) throws ExceptionDeal {
+                             LocalDate dateDébut, LocalDate dateFin, Integer fournisseurCode, Integer idCategories,String code,List<Categories> categoriesList,List<Fournisseur> fournisseurs) throws ExceptionDeal {
         if (nom == null || description == null || prixInitial == null || prixDeal == null || dateDébut == null || dateFin == null|| code == null
-                || localisation == null || categories == null) {
+                || fournisseurCode == null || idCategories == null) {
             throw new ChampsObligatoireExceptionn();
         }
         List<Vente> ventes= new ArrayList<>();
-
+        Categories categories=ServiseCategorie.getCategorieById(idCategories,categoriesList);
+        Fournisseur localisation=ServiceFournisseur.getFournisseurCode(fournisseurCode,fournisseurs);
         Deal deal = new Deal(description, prixInitial, prixDeal, dateDébut,
                 dateFin, localisation, categories, ventes, nom,code);
         return deal;
@@ -210,6 +214,58 @@ public class ServiceDeal {
             i++;
 
         }
+    }
+
+    /**
+     * String description, String nom, Float prixInitial, Float prixDeal,
+     *  LocalDate dateDébut, LocalDate dateFin, Integer fournisseurCode,
+     *  Integer idCategories,
+     *    String code,List<Categories> categoriesList,
+     *    List<Fournisseur> fournisseurs)
+     * @param categoriesList
+     * @param fournisseurs
+     * @return
+     * @throws IOException
+     */
+
+    public static List<Deal> loadCategorieFile(List<Categories> categoriesList,List<Fournisseur> fournisseurs) throws IOException, ExceptionDeal {
+        ArrayList<Deal> deals = new ArrayList<Deal>();
+        FileReader fileReader = new FileReader(fileUrl);
+        BufferedReader ReadFileBuffer = new BufferedReader(fileReader);
+        String line = ReadFileBuffer.readLine();
+        while (line != null) {
+            String[] attributs = line.split(";");
+            Deal deal = creat(attributs[0], attributs[1],Float.valueOf(attributs[2]),Float.valueOf(attributs[3])
+                    ,  LocalDate.parse(attributs[4]/*, formatter*/),LocalDate.parse(attributs[5]/*, formatter*/),Integer.valueOf(attributs[6]),Integer.valueOf(attributs[7]),attributs[6],categoriesList,fournisseurs);
+            deals.add(deal);
+            line = ReadFileBuffer.readLine();
+            if (line != null)
+                System.out.println(line);
+        }
+        return deals;
+
+    }
+    /**
+     * @throws IOException
+     *  Float prixInitial, Float prixDeal,
+     *   LocalDate dateDébut, LocalDate dateFin, Integer fournisseurCode,
+     *   Integer idCategories,
+     *     String code,List<Categories> categoriesList,List<Fournisseur> fournisseurs
+     */
+    public static void saveCategorieFile(List<Deal> deals) throws IOException {
+        FileWriter fileWriter = new FileWriter(fileUrl);
+        BufferedWriter WriteFileBuffer = new BufferedWriter(fileWriter);
+        int i = 0;
+        while (i < deals.size()) {
+            String line = String.valueOf(deals.get(i).getDescription()) + ';' + deals.get(i).getNom() +
+                    ";"+ deals.get(i).getPrixInitial() + ";"+ deals.get(i).getPrixDeal()+ ";"+ deals.get(i).getDateDébut()+ ";"+  deals.get(i).getDateFin()+";"+ deals.get(i).getCode()+";"+deals.get(i).getLocalisation().getCode() +
+                    ";"+ deals.get(i).getCategories().getId() + ";";
+            WriteFileBuffer.write(line);
+            WriteFileBuffer.newLine();
+            i++;
+        }
+        WriteFileBuffer.close();
+
     }
 
 

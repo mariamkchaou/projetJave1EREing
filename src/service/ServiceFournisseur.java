@@ -39,6 +39,24 @@ public class ServiceFournisseur {
 
     }
 
+    /**
+     *
+     * @param code
+     * @param fournisseur
+     * @return
+     */
+    public static Fournisseur getFournisseurCode(Integer code, List<Fournisseur> fournisseur) {
+        int i = 0;
+        while (i < fournisseur.size()) {
+
+            if (fournisseur.get(i).getCode().equals(code)) {
+                return fournisseur.get(i);
+            }
+            i++;
+        }
+
+        return null;
+    }
 
 
 

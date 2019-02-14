@@ -7,16 +7,27 @@ import java.util.List;
 public class Vente {
 
     private LocalDate dateAchat;
+    private  Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     private Deal deals;
     private Client client;
     private Float quantité;
 
 
-    public Vente(LocalDate dateAchat, Deal deals, Client client, Float quantité) {
+    public Vente(LocalDate dateAchat, Deal deals, Client client, Float quantité,Integer id) {
         this.dateAchat = dateAchat;
         this.deals = deals;
         this.client = client;
         this.quantité = quantité;
+        this.id=id;
     }
 
     public Deal getDeals() {

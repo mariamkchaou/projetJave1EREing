@@ -2,6 +2,7 @@ import entities.*;
 import error.ErrorsDeal;
 import error.exception.ExceptionDeal;
 import org.omg.CORBA.Object;
+import responce.Menu;
 import service.*;
 
 import java.time.LocalDate;
@@ -13,15 +14,11 @@ import java.util.Scanner;
 public class Main {
     public static List<Client> clients;
 
+    public static LocalDate currentDate = LocalDate.now();
+
     public static void main(String[] args) throws ExceptionDeal {
 
-        LocalDate currentDate = LocalDate.now();
-
-      try {
-            /**
-             * initialisation
-             */
-
+        try {
 
             /**
              *initilisation client
@@ -32,128 +29,27 @@ public class Main {
              * initiaisation fournisseur
              */
 
-          List<Fournisseur> fournisseurs = ServiceFournisseur.loadFournisseurFile();
+            List<Fournisseur> fournisseurs = ServiceFournisseur.loadFournisseurFile();
             ServiceFournisseur.saveFournisseurFile(fournisseurs);
 
             /**
              * initialisation categorie
              */
-            
-          List<Categories> categories= ServiseCategorie.loadCategorieFile();
+
+            List<Categories> categories = ServiseCategorie.loadCategorieFile();
             ServiseCategorie.saveCategorieFile(categories);
+         List<Deal> deals = remplirDeal(categories, fournisseurs);
+            ServiceDeal.saveCategorieFile(deals);
+            List<Deal> deal=ServiceDeal.loadCategorieFile(categories,fournisseurs);
+            System.out.println(deal.size());
 
+            ServiceDeal.saveCategorieFile(deal);
+            // String choix = Menu.lireChoix();
 
-
-
-           /* List<Deal> deals = new ArrayList<>();
-            Deal deal1 = ServiceDeal.creat(" Profitez de nos offres spéciales! Petits Prix. Réservez Maintenant. Sans frais de réservation. ",
-                    "Palace", 100f, 120f, currentDate, currentDate.plusMonths(2), fournisseur, categories3, "100");
-            Deal deal2 = ServiceDeal.creat(" Profitez de nos offres spéciales! Petits Prix. Réservez Maintenant. Sans frais de réservation. ",
-                    "Talaso", 100f, 120f, currentDate, currentDate.plusMonths(2), fournisseur, categories3, "101");
-            Deal deal3 = ServiceDeal.creat(" Profitez de nos offres spéciales! Petits Prix. Réservez Maintenant. Sans frais de réservation. ",
-                    "Vacance", 100f, 120f, currentDate, currentDate.plusMonths(2), fournisseur, categories3, "103");
-            deals.add(deal1);
-            deals.add(deal2);
-            deals.add(deal3);
-
-            String choix = lireChoix();
-
-            if (choix.equals("1")) {
-                HashMap<String, String> map = lireClientInformation();
-                Client client0 = ServiceClient.creat(map.get("nom"), map.get("adresse"), map.get("telephone"), map.get("mail"), map.get("cin"), clients);
-                clients.add(client0);
-
-            }
-            if (choix.equals("2")) {
-
-                Categories categorie = null;
-                HashMap<String, String> mapDeal = lireDealInformation();
-                if (mapDeal.get("categoriesCode").equals("1")) {
-                    categorie = categories1;
-                } else if (mapDeal.get("categoriesCode").equals("2")) {
-                    categorie = categories2;
-                } else if (mapDeal.get("categoriesCode").equals("3")) {
-                    categorie = categories3;
-                } else {
-                    System.out.println("categorie not existe");
-                }
-                Deal deal0 = ServiceDeal.creat(mapDeal.get("desc"),
-                        mapDeal.get("nom"), Float.parseFloat(mapDeal.get("prixInitial")), Float.parseFloat(mapDeal.get("prixDeal")), currentDate, currentDate.plusMonths(2), fournisseur, categorie, mapDeal.get("code"));
-            }
-            if (choix.equals("3")) {
-
-                HashMap<String, String> mapFournisseur = lireFourniseurInformation();
-                Fournisseur fournisseur1 = ServiceFournisseur.creat(mapFournisseur.get("nom"), mapFournisseur.get("adresse"), mapFournisseur.get("telephone"), mapFournisseur.get("mail"), mapFournisseur.get("cin")
-                        , Float.parseFloat(mapFournisseur.get("heure")), Integer.parseInt(mapFournisseur.get("code")));
-                fournisseurs.add(fournisseur1);
-
-            }
-            if (choix.equals("4")) {
-                ServiceDeal.afficheClientByDeal(deal1);
-            }
-
-            if (choix.equals("5")) {
-
-                ServiceDeal.afficheListDealOrderChrono(client2);
-            }
-            if (choix.equals("6")) {
-
-                Scanner scan = new Scanner(System.in);
-                System.out.println(" 1-spa  restauration spa");
-                System.out.println(" 2-  restauration");
-                System.out.println(" 3- hôtel");
-                System.out.println("Donner  le numero de categorie");
-                String categorie = scan.nextLine();
-                if (categorie.equals("1")) {
-                    categorie = "spa";
-                } else if (categorie.equals("2")) {
-                    categorie = "restauration";
-                } else if (categorie.equals("3")) {
-                    categorie = "hôtel";
-                } else {
-                    System.out.println("categorie not existe");
-                }
-
-                ServiceDeal.afficheListDealByCategorie(deals,  categorie);
-            }
-            if (choix.equals("7")) {
-
-            }
-
-
-            *//**
-             * remplir Vente
-             *//*
-            List<Vente> ventes = new ArrayList<>();
-            LocalDate dateAchat = LocalDate.now();
-
-
-            Vente vente1 = ServiceVente.creeat(dateAchat, deal1.getCode(), client1.getCin(), 1f, clients, deals);
-           *//* Vente vente2= ServiceVente.creeat( dateAchat,  deal2,  client2,  3f,clients, deals);
-            Vente vente3= ServiceVente.creeat( dateAchat,  deal1,  client3,  9f,clients, deals);
-            Vente vente4= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
-            Vente vente5= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
-            Vente vente6= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
-            Vente vente7= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
-            Vente vente8= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
-            Vente vente9= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
-            Vente vente10= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
-            Vente vente11= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
-            ServiceClient.chercheByCIN("00000000", clients);
-            ServiceClient.afficheOne(ServiceClient.chercheByCIN("00000000", clients));*//*
-             *//**
-             *
-             *//*
-
-             *//*   ServiceDeal.chercheDealEnCoursByCtagorie(deals, "hôtel");
-            ServiceDeal.affiche(deals);
-
-            ServiceDeal.afficheListClientByDeal(deals);*/
-
-       /* } catch (ExceptionDeal e) {
-            System.out.println(e.getError().getDesc());*/
+        } catch (ExceptionDeal e) {
+            System.out.println(e.getError().getDesc());
         } catch (Exception e) {
-            System.out.println(ErrorsDeal.ERRORS_GENERALE.getDesc()+""+e);
+            System.out.println(ErrorsDeal.ERRORS_GENERALE.getDesc() + "" + e);
 
 
         }
@@ -186,19 +82,7 @@ public class Main {
     /**
      * @return
      */
-    public static String lireChoix() {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Donner  votre  choix : ");
-        System.out.println("1- Créer Client.");
-        System.out.println("2- Créer Deal.");
-        System.out.println("3- Créer  un fournisseur.");
-        System.out.println("4- Afficher la liste des clients par deal.");
-        System.out.println("5- Afficher la liste des deals d’un client par ordre chronologique.");
-        System.out.println("6- Rechercher les deals en cours par catégorie.");
-        System.out.println("7- exit");
-        String choix = scan.nextLine();
-        return choix;
-    }
+
 
     /**
      * @return
@@ -263,4 +147,38 @@ public class Main {
         return map;
     }
 
+    public static List<Deal> remplirDeal(List<Categories> categoriesList, List<Fournisseur> fournisseurs) throws ExceptionDeal {
+
+        List<Deal> deals = new ArrayList<>();
+        Deal deal1 = ServiceDeal.creat(" Profitez de nos offres spéciales! Petits Prix. Réservez Maintenant. Sans frais de réservation. ",
+                "Palace", 100f, 120f, currentDate, currentDate.plusMonths(2), 123, 1, "100", categoriesList, fournisseurs);
+        Deal deal2 = ServiceDeal.creat(" Profitez de nos offres spéciales! Petits Prix. Réservez Maintenant. Sans frais de réservation. ",
+                "Talaso", 100f, 120f, currentDate, currentDate.plusMonths(2), 123, 1, "101",
+                categoriesList, fournisseurs);
+        Deal deal3 = ServiceDeal.creat(" Profitez de nos offres spéciales! Petits Prix. Réservez Maintenant. Sans frais de réservation. ",
+                "Vacance", 100f, 120f, currentDate, currentDate.plusMonths(2), 123, 3, "103", categoriesList, fournisseurs);
+        deals.add(deal1);
+        deals.add(deal2);
+        deals.add(deal3);
+        return  deals;
+    }
 }
+
+   /* List<Vente> ventes = new ArrayList<>();
+    LocalDate dateAchat = LocalDate.now();
+    Vente vente1 = ServiceVente.creeat(dateAchat, deal1.getCode(), client1.getCin(), 1f, clients, deals);
+    Vente vente2= ServiceVente.creeat( dateAchat,  deal2,  client2,  3f,clients, deals);
+    Vente vente3= ServiceVente.creeat( dateAchat,  deal1,  client3,  9f,clients, deals);
+    Vente vente4= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
+    Vente vente5= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
+    Vente vente6= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
+    Vente vente7= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
+    Vente vente8= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
+    Vente vente9= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
+    Vente vente10= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
+    Vente vente11= ServiceVente.creeat( dateAchat,  deal1,  client1,  1f,clients, deals);
+            ServiceClient.chercheByCIN("00000000", clients);
+            ServiceClient.afficheOne(ServiceClient.chercheByCIN("00000000", clients));*/
+
+
+
