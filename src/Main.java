@@ -24,9 +24,9 @@ public class Main {
         try {
             String choix;
 
-                    /**
-                     *initilisation client
-                     */
+            /**
+             *initilisation client
+             */
             clients = new ArrayList<>();
             clients = ServiceClient.loadClientFile();
 
@@ -57,9 +57,24 @@ public class Main {
             ventes = new ArrayList<>();
             //    remplirVente(deal, clients, ventes);
             ventes = ServiceVente.loadVentesFile(clients, deal);
+            choix = "1";
+            while (!choix.equals("7")) {
+                choix = Menu.lireChoix();
+                if (choix.equals("1")) {
+                    HashMap<String, String> map = lireClientInformation();
+                    ServiceClient.creat(map.get("nom"),map.get("adresse"),map.get("telephone"),map.get("mail"),map.get("cin"),clients);
 
+                } else if (choix.equals("2")) {
+                    HashMap<String, String> map = lireFourniseurInformation();
+                    ServiceFournisseur.creat(map.get("nom"),map.get("adresse"),map.get("telephone"),map.get("mail"),map.get("cin"),Float.valueOf(map.get("heure")),Integer.valueOf(map.get("code")),fournisseurs);
 
-            choix = Menu.lireChoix();
+                } else if (choix.equals("3")) {
+
+                } else if (choix.equals("4")) {
+
+                }
+            }
+
 
         } catch (ExceptionDeal e) {
             System.out.println(e.getError().getDesc());

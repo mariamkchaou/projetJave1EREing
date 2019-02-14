@@ -170,8 +170,7 @@ public class ServiceClient {
                 exceptionDeal.printStackTrace();
             }
             line = ReadFileBuffer.readLine();
-            if (line != null)
-                System.out.println(line);
+
         }
 
         return clients;

@@ -8,8 +8,9 @@ public class Menu {
         System.out.println("***************************************");
         System.out.println("    Donner  votre  choix : ");
         System.out.println("1- Créer Client.");
-        System.out.println("3- Créer  un fournisseur.");
-        System.out.println("6- Rechercher les deals en cours par catégorie.");
+        System.out.println("2- Créer  un fournisseur.");
+        System.out.println("3- acceder a votre compte.");
+        System.out.println("4- Rechercher les deals en cours par catégorie.");
         System.out.println("7- exit");
         System.out.println("***************************************");
         String choix = scan.nextLine();
@@ -45,6 +46,16 @@ public class Menu {
         System.out.println("***************************************");
         System.out.println("    Donner  votre  cin ");
         System.out.println("7- exit");
+        System.out.println("***************************************");
+        String choix = scan.nextLine();
+        return choix;
+    }
+    public static String TypeClient() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("***************************************");
+        System.out.println("   vous  étes ");
+        System.out.println("1-client");
+        System.out.println("1-Fournisseur");
         System.out.println("***************************************");
         String choix = scan.nextLine();
         return choix;

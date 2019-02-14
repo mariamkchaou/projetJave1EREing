@@ -244,8 +244,7 @@ public class ServiceDeal {
             Deal deal = creat(attributs[0], attributs[1], Float.valueOf(attributs[2]), Float.valueOf(attributs[3])
                     , LocalDate.parse(attributs[4]), LocalDate.parse(attributs[5]), Integer.valueOf(attributs[6]), Integer.valueOf(attributs[7]), attributs[8], categoriesList, fournisseurs, deals);
             line = ReadFileBuffer.readLine();
-            if (line != null)
-                System.out.println(line);
+
         }
         return deals;
 

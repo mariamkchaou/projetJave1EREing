@@ -41,8 +41,7 @@ public class ServiseCategorie {
             Categories categorie = creat(Integer.parseInt(attributs[0]), attributs[1]);
             categories.add(categorie);
             line = ReadFileBuffer.readLine();
-            if (line != null)
-                System.out.println(line);
+
         }
         return categories;
 

@@ -34,7 +34,7 @@ public class ServiceFournisseur {
         if (!email.contains("@")) {
             throw new EmailFormatException();
         }
-        Fournisseur fournisseur = new Fournisseur(nom, adresse, téléphone, email, cin, horaireTravail, 123);
+        Fournisseur fournisseur = new Fournisseur(nom, adresse, téléphone, email, cin, horaireTravail, code);
         fournisseurs.add(fournisseur);
         saveFournisseurFile(fournisseurs);
         return fournisseur;
@@ -74,8 +74,7 @@ public class ServiceFournisseur {
                 exceptionDeal.printStackTrace();
             }
             line = ReadFileBuffer.readLine();
-            if (line != null)
-                System.out.println(line);
+
         }
         return fournisseurs;
 

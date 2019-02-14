@@ -54,7 +54,7 @@ public class ServiceVente {
          */
         ServiceDeal.addVenteToDeal(deals, vente, deal);
         ServiceDeal.saveDealFile(deals);
-        System.out.println(" La vente a été réalisée avec succès, au prix : " + calculePrix(vente));
+      //  System.out.println(" La vente a été réalisée avec succès, au prix : " + calculePrix(vente));
 
         return vente;
 
@@ -85,8 +85,7 @@ public class ServiceVente {
             String[] attributs = line.split(";");
             Vente vente = creat(LocalDate.parse(attributs[4]), attributs[1], attributs[2], Float.parseFloat(attributs[3]), clients, Integer.valueOf(attributs[0]), deals, ventes);
             line = ReadFileBuffer.readLine();
-            if (line != null)
-                System.out.println(line);
+
         }
         return ventes;
 

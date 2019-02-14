@@ -2,3 +2,4 @@ mariam;nabeul;40323232;mariam@5515;00000000;
 hana;mahdia;40323235;hana@5515;10000000;
 tesnime;sousse;40323238;tesnime@5515;00000002;
 Ali;sousse;40323237;mariam@5515;00000008;
+amal;korba;23456789;@amal.com;23655478;
